@@ -1,0 +1,66 @@
+<div class="card">
+    <div class="card-header card-header-danger">
+        <h4 class="card-title">Add a Patient</h4>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <form #form="ngForm" (submit)="onPatientAdd(form)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Fist Name" type="text" name="first_name"
+                                   [(ngModel)]="patient.first_name" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Last Name" type="text" name="last_name"
+                                   [(ngModel)]="patient.last_name" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Email address" type="email" name="email"
+                                   [(ngModel)]="patient.email">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Phone" type="tel" name="phone" [(ngModel)]="patient.phone"
+                                   required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Date of Birth" type="date" name="dob" [(ngModel)]="patient.dob"
+                                   required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Race" type="text" name="race" [(ngModel)]="patient.race"
+                                   required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="Select a Gender" name="gender" [(ngModel)]="patient.gender"
+                                        required>
+                                <mat-option value="male">Male</mat-option>
+                                <mat-option value="female">Female</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-raised-button type="submit" class="btn btn-danger pull-right">Add
+                    Patient
+                </button>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>

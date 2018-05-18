@@ -1,0 +1,92 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <form #form="ngForm" (submit)="onSignup()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="First Name"
+                                                type="text"
+                                                name="first_name"
+                                                [(ngModel)]="dietition.first_name"
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Last Name"
+                                                type="text"
+                                                name="last_name"
+                                                [(ngModel)]="dietition.last_name"
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Email address"
+                                                type="email"
+                                                name="email"
+                                                [(ngModel)]="dietition.email"
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Phone"
+                                                type="tel"
+                                                name="phone"
+                                                [(ngModel)]="dietition.phone"
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Password"
+                                                type="password"
+                                                name="password"
+                                                [(ngModel)]="password"
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Confirm Password"
+                                                type="password"
+                                                name="confirm_password"
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" [disabled]="!form.valid">Register</button>
+                            <div class="clearfix"></div>
+                        </form>
+                        <a routerLink="/login">Already have an account? Login here.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

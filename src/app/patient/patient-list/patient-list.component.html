@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header card-header-warning">
+        <h4 class="card-title">Your Patients</h4>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th *ngFor="let column of displayedColumns">{{column}}</th>
+            </tr>
+            <tr *ngFor="let patient of patients">
+                <td>{{patient.first_name}}</td>
+                <td>{{patient.last_name}}</td>
+                <td>{{patient.email}}</td>
+                <td>{{patient.phone}}</td>
+                <td>{{getAge(patient.dob)}}</td>
+                <td>{{patient.race}}</td>
+                <td>{{patient.gender}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

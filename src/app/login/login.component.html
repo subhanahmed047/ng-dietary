@@ -1,0 +1,49 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <form #form="ngForm" (submit)="onEmailLogin(form)">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Email address"
+                                                type="email"
+                                                name="email"
+                                                ngModel
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field>
+                                        <input
+                                                matInput
+                                                placeholder="Password"
+                                                type="password"
+                                                name="password"
+                                                ngModel
+                                                required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right"
+                                    [disabled]="!form.valid">Login
+                            </button>
+                            <div class="clearfix"></div>
+                        </form>
+                        <a routerLink="/register">Don't have an account? Register here.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

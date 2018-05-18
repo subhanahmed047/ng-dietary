@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-header card-header-success">
+        <h4 class="card-title text-white" style="font-weight: 700;">Results</h4>
+        <p class="card-category">Risk Factor Result and Percentage.</p>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-md-12 bg-light text-dark">
+                <div *ngIf="result.value !== 0; else noResults;">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <h2 style="font-weight: 500">{{result.value}} <span style="font-size: 20px;"
+                                                                                class="text-muted"> Points</span>
+                            </h2>
+                            <span class="help-block">FINDRISC (Finding Diabetes Risk Score)</span>
+                        </div>
+                        <div class="col-md-4">
+                            <h2 style="font-weight: 500">{{result.percentage}} <span style="font-size: 20px;"
+                                                                                     class="text-muted">%</span></h2>
+                            <span class="help-block">10-year risk of developing T2DM</span>
+                        </div>
+                        <div class="col-md-4">
+                            <h2 style="font-weight: 500"
+                                [class.text-success]="result.risc == 'Very Low'"
+                                [class.text-info]="result.risc == 'Moderate'"
+                                [class.text-warning]="result.risc == 'High'"
+                                [class.text-danger]="result.risc == 'Very High'"
+                            >{{result.risc}} <span style="font-size: 20px;" class="text-muted"> Risk</span></h2>
+                            <span class="help-block">Guidelines vary by setting, but consider formal screening with HgbA1c for moderate or greater risk patients, and addressing modifiable risk factors with all patients.</span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <button mat-raised-button type="button" class="btn btn-block btn-success"
+                                    (click)="onSaveVisit()">Save Visit
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <ng-template #noResults>
+                    <div class="col-md-12 text-center">Select Options above to see reults.</div>
+                </ng-template>
+
+
+            </div>
+        </div>
+    </div>
+</div>

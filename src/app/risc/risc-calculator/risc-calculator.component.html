@@ -1,0 +1,205 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="row">
+            <div class="col-md-5">
+                Select Patient
+            </div>
+            <div class="col-md-7">
+                <mat-form-field>
+                    <mat-select [(ngModel)]="selectedPatient" (selectionChange)="onPatientSelected()"  placeholder="Select a Patient">
+                        <mat-option *ngFor="let patient of patients" [value]="patient">{{ patient.first_name }} {{patient.last_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>Gender</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group
+                        [(ngModel)]="scores.gender"
+                        (change)="onScoreChange()"
+                >
+                    <mat-button-toggle value="male">
+                        Male
+                    </mat-button-toggle>
+                    <mat-button-toggle value="female">
+                        Female
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>Age, years</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group [(ngModel)]="scores.age" (change)="onScoreChange()">
+                    <mat-button-toggle value="0">
+                        <45
+                    </mat-button-toggle>
+                    <mat-button-toggle value="2">
+                        45-54
+                    </mat-button-toggle>
+                    <mat-button-toggle value="3">
+                        55-64
+                    </mat-button-toggle>
+                    <mat-button-toggle value="4">
+                        >64
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>BMI, kg/m²</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group [(ngModel)]="scores.bmi" (change)="onScoreChange()">
+                    <mat-button-toggle value="0">
+                        <25
+                    </mat-button-toggle>
+                    <mat-button-toggle value="1">
+                        25-30
+                    </mat-button-toggle>
+                    <mat-button-toggle value="2">
+                        >30
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+
+        <div *ngIf="scores.gender">
+            <div *ngIf="scores.gender == 'female'; else male;">
+                <mat-divider></mat-divider>
+                <div class="row">
+                    <div class="col-md-5">
+                        <mat-label>Waist circumference</mat-label>
+                    </div>
+                    <div class="col-md-7">
+                        <mat-button-toggle-group vertical [(ngModel)]="scores.waist" (change)="onScoreChange()">
+                            <mat-button-toggle value="0">
+                                <80 cm (31 in)
+                            </mat-button-toggle>
+                            <mat-button-toggle value="3">
+                                80 to <88 cm (31 to <35 in)
+                            </mat-button-toggle>
+                            <mat-button-toggle value="4">
+                                80 to <88 cm (31 to <35 in)
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                </div>
+            </div>
+            <ng-template #male>
+                <mat-divider></mat-divider>
+                <div class="row">
+                    <div class="col-md-5">
+                        <mat-label>Waist circumference</mat-label>
+                    </div>
+                    <div class="col-md-7">
+                        <mat-button-toggle-group vertical [(ngModel)]="scores.waist" (change)="onScoreChange()">
+                            <mat-button-toggle value="0">
+                                <94 cm (37 in)
+                            </mat-button-toggle>
+                            <mat-button-toggle value="3">
+                                94 to <102 cm (37 to <40 in)
+                            </mat-button-toggle>
+                            <mat-button-toggle value="4">
+                                ≥102 cm (≥40 in)
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>Use of blood pressure medication</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group [(ngModel)]="scores.bp" (change)="onScoreChange()">
+                    <mat-button-toggle value="0">
+                        No
+                    </mat-button-toggle>
+                    <mat-button-toggle value="2">
+                        Yes
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>History of high blood glucose</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group [(ngModel)]="scores.glucose" (change)="onScoreChange()">
+                    <mat-button-toggle value="0">
+                        No
+                    </mat-button-toggle>
+                    <mat-button-toggle value="5">
+                        Yes
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>Physical activity</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group [(ngModel)]="scores.physical" (change)="onScoreChange()">
+                    <mat-button-toggle value="0">
+                        ≥4 hr/week
+                    </mat-button-toggle>
+                    <mat-button-toggle value="2">
+                        <4 hr/week
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>Daily consumption of vegetables, fruits, or berries</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group [(ngModel)]="scores.consumption" (change)="onScoreChange()">
+                    <mat-button-toggle value="1">
+                        No
+                    </mat-button-toggle>
+                    <mat-button-toggle value="0">
+                        Yes
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-md-5">
+                <mat-label>Family history of diabetes</mat-label>
+            </div>
+            <div class="col-md-7">
+                <mat-button-toggle-group vertical [(ngModel)]="scores.history" (change)="onScoreChange()">
+                    <mat-button-toggle value="0">
+                        No
+                    </mat-button-toggle>
+                    <mat-button-toggle value="3">
+                        Yes, 2nd degree relative
+                    </mat-button-toggle>
+                    <mat-button-toggle value="5">
+                        Yes, 1st degree relative
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Dietitian Area</h4>
+                <p class="card-category">Calculate Risk Factor</p>
+            </div>
+            <div class="card-body">
+                <app-risc-calculator (scoresChange)="onScoresChange($event)"></app-risc-calculator>
+                <app-result [scores]="scoreSubject"></app-result>
+            </div>
+        </div>
+    </div>
+</div>
+

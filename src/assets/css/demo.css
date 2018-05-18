@@ -1,0 +1,58 @@
+/*my-app .main-panel .main-content .card{
+    animation-duration: 750ms;
+    opacity: 0;
+    animation-name: fadeIn;
+    animation-fill-mode: forwards;
+}*/
+
+.tim-typo {
+    padding-left: 25%;
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+}
+
+.tim-typo .tim-note {
+    bottom: 5px;
+    color: #c0c1c2;
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    left: 0;
+    margin-left: 20px;
+    position: absolute;
+    width: 260px;
+}
+
+.mat-button-toggle, .mat-button-toggle-group {
+    width: 100%;
+}
+
+.mat-button-toggle {
+    border: 1px solid lightgrey;
+    background-color: #e0e0e0;
+}
+
+.mat-button-toggle-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.mat-button-toggle-label-content {
+    color: black;
+}
+
+.mat-button-toggle-checked {
+    background: linear-gradient(60deg, #ef5350, #e53935);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+}
+
+.mat-button-toggle-checked .mat-button-toggle-label-content {
+    color: #ffff;
+    font-weight: bold;
+}
+
+.full-width{
+    width:100%;
+}
