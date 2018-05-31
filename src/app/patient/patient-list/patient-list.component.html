@@ -15,6 +15,15 @@
                 <td>{{getAge(patient.dob)}}</td>
                 <td>{{patient.race}}</td>
                 <td>{{patient.gender}}</td>
+                <td>
+                    <span
+                            class="cursor-pointer text-danger"
+                            mwlConfirmationPopover
+                            [popoverTitle]="deletePatientPopoverTitle"
+                            placement="left"
+                            (confirm)="onPatientDelete(patient.id)"
+                    ><mat-icon>delete</mat-icon></span>
+                </td>
             </tr>
         </table>
     </div>

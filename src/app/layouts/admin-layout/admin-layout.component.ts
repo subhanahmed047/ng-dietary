@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import 'rxjs/add/operator/filter';
 import {ActivatedRoute} from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
+import {AuthService} from "../../core/auth/auth.service";
 
 @Component({
     selector: 'app-admin-layout',
@@ -10,7 +11,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 })
 export class AdminLayoutComponent implements OnInit {
 
-    constructor(private activatedRoute: ActivatedRoute) {
+    constructor(private activatedRoute: ActivatedRoute,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -34,9 +36,19 @@ export class AdminLayoutComponent implements OnInit {
         return bool;
     }
 
-    isAuthPage() {
+    isNoMenuPage() {
         const authPages = ['/login', '/register'];
         return authPages.includes(this.activatedRoute.snapshot['_routerState'].url);
     }
+
+    isGuestPage() {
+        const guestPages = ['/reports'];
+        return guestPages.includes(this.activatedRoute.snapshot['_routerState'].url);
+    }
+
+    isUserLoggedIn(){
+        return this.authService.user;
+    }
+
 
 }

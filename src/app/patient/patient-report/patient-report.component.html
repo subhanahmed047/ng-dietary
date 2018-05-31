@@ -1,0 +1,50 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Reports</h4>
+                    </div>
+                    <div class="card-body">
+                        <form #form="ngForm" (submit)="onSearch(form)">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-9">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Enter Patient ID" type="text" name="id" ngModel
+                                               required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-success"> Search</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th *ngFor="let column of displayedColumns">{{column}}</th>
+                                </tr>
+                                <tr *ngFor="let result of results">
+                                    <td>{{result.created | formattedDate}}</td>
+                                    <td>{{result.percentage}}%</td>
+                                    <td>{{result.value}}</td>
+                                    <td
+                                            [class.text-success]="result.risc == 'Very Low'"
+                                            [class.text-info]="result.risc == 'Moderate'"
+                                            [class.text-warning]="result.risc == 'High'"
+                                            [class.text-danger]="result.risc == 'Very High'">{{result.risc}}
+                                    </td>
+                                    <td>
+                                </tr>
+                                <tr *ngIf="!results" class="text-center text-muted"><td colspan="4">No Results Available!</td></tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

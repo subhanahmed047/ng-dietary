@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RiscScore} from "../risc/risc.mode";
 import {BehaviorSubject} from "rxjs/Rx";
 import {ToastService} from "../shared/toast.service";
+import {Patient} from "../patient/patient.model";
 
 @Component({
     selector: 'app-dietitian',
@@ -10,9 +11,11 @@ import {ToastService} from "../shared/toast.service";
 })
 export class DietitianComponent implements OnInit {
 
-    scores: RiscScore;
+    private scores: RiscScore;
+    private patient: Patient;
 
     scoreSubject: BehaviorSubject<RiscScore> = new BehaviorSubject(this.scores);
+    patientSubject: BehaviorSubject<Patient> = new BehaviorSubject(this.patient);
 
     constructor() {
     }
@@ -22,6 +25,10 @@ export class DietitianComponent implements OnInit {
 
     onScoresChange(scores: RiscScore) {
         this.scoreSubject.next(scores);
+    }
+
+    onPatientChange(patient: Patient) {
+        this.patientSubject.next(patient);
     }
 
 }

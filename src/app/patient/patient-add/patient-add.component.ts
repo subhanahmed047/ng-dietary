@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Patient} from "../patient.model";
 import {TOAST_TYPE, ToastService} from "../../shared/toast.service";
 import {PatientService} from "../patient.service";
+import {AuthService} from "../../core/auth/auth.service";
 
 @Component({
     selector: 'app-patient-add',
@@ -23,11 +24,15 @@ export class PatientAddComponent implements OnInit {
 
     constructor(
         private toastService: ToastService,
-        private patientService: PatientService
+        private patientService: PatientService,
+        private authSrvice: AuthService
     ) {
     }
 
     ngOnInit() {
+        this.authSrvice.user.subscribe(dietition => {
+            this.patient.dietitian = dietition;
+        })
     }
 
     onPatientAdd(form: HTMLFormElement) {

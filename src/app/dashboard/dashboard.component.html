@@ -1,45 +1,56 @@
 <div class="main-content">
-  <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <mat-form-field>
-                  <mat-select [(ngModel)]="selectedPatient" placeholder="Select a Patient">
-                      <mat-option *ngFor="let patient of patients" [value]="patient">{{ patient.first_name }} {{patient.last_name}}</mat-option>
-                  </mat-select>
-              </mat-form-field>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-success">
-                      <div class="ct-chart" id="dailySalesChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">T2DM Improvements</h4>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-warning">
-                      <div class="ct-chart" id="websiteViewsChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">BMI Per Visit</h4>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-danger">
-                      <div class="ct-chart" id="completedTasksChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Risk Graph</h4>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field>
+                    <mat-select [(ngModel)]="selectedPatient" placeholder="Select a Patient"
+                                (selectionChange)="onChangePatient()">
+                        <mat-option *ngFor="let patient of patients" [value]="patient">{{ patient.first_name }}
+                            {{patient.last_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="!hasResults">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p *ngIf="selectedPatient" class="text-center text-muted">This patient has no recorded visits.</p>
+                    <p *ngIf="!selectedPatient" class="text-center text-muted">Select a patient from the list above to see statistics.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" [style.visibility]="hasResults ? 'visible' : 'hidden' ">
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success">
+                        <div class="ct-chart" id="tdmChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">T2DM Improvements</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-warning">
+                        <div class="ct-chart" id="bmiChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">BMI Per Visit</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-danger">
+                        <div class="ct-chart" id="riskChart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Risk Graph</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

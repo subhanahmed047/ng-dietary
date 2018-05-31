@@ -1,3 +1,6 @@
+import {Patient} from "../../patient/patient.model";
+import {RiscScore} from "../risc.mode";
+
 export enum RISC_FACTOR {
     VERY_LOW = 'Very Low',
     LOW = 'Low',
@@ -8,6 +11,9 @@ export enum RISC_FACTOR {
 
 export class Result {
     risc: RISC_FACTOR;
+    riscScore: RiscScore;
     percentage: number;
     value: number;
+    patient: Patient;
+    created: Date
 }

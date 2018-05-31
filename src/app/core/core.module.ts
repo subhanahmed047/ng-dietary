@@ -13,12 +13,10 @@ import {AngularFireAuthModule} from "angularfire2/auth";
         CoreRoutingModule,
         AngularFireAuthModule,
         AngularFireModule.initializeApp(environment.firestoreConfig),
-        AngularFirestoreModule.enablePersistence()
+        AngularFirestoreModule
     ],
-    declarations: [
-    ],
-    exports: [
-    ]
+    declarations: [],
+    exports: []
 })
 export class CoreModule {
 }

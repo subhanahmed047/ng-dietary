@@ -22,6 +22,7 @@
                 <mat-button-toggle-group
                         [(ngModel)]="scores.gender"
                         (change)="onScoreChange()"
+                        disabled
                 >
                     <mat-button-toggle value="male">
                         Male
@@ -188,7 +189,7 @@
                 <mat-label>Family history of diabetes</mat-label>
             </div>
             <div class="col-md-7">
-                <mat-button-toggle-group vertical [(ngModel)]="scores.history" (change)="onScoreChange()">
+                <mat-button-toggle-group vertical [(ngModel)]="scores.history" (change)="onScoreChange()" [disabled]="isAutoloadedScores">
                     <mat-button-toggle value="0">
                         No
                     </mat-button-toggle>

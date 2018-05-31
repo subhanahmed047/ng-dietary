@@ -1,8 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RiscScore} from "../risc.mode";
 import {Result, RISC_FACTOR} from "./result.model";
-import {BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {TOAST_TYPE, ToastService} from "../../shared/toast.service";
+import {Patient} from "../../patient/patient.model";
+import {ResultService} from "./result.service";
+import {switchMap} from "rxjs/operators";
+import {map} from "rxjs/internal/operators";
 
 @Component({
     selector: 'app-result',
@@ -12,20 +16,32 @@ import {TOAST_TYPE, ToastService} from "../../shared/toast.service";
 export class ResultComponent implements OnInit {
 
     @Input() scores: BehaviorSubject<RiscScore>;
+    @Input() patient: BehaviorSubject<Patient>;
+
+    savingVisit: boolean = false;
 
     result: Result = {
         value: 0,
         risc: RISC_FACTOR.LOW,
-        percentage: 0
+        riscScore: null,
+        percentage: 0,
+        patient: null,
+        created: new Date()
     };
 
-    constructor(private toasterService: ToastService) {
+    constructor(private toastService: ToastService,
+                private resultService: ResultService) {
     }
 
     ngOnInit() {
         this.scores.subscribe(scores => {
+            this.result.riscScore = scores;
             this.calculateRiscResults(scores);
         });
+        this.patient
+            .subscribe(patient => {
+                this.result.patient = patient;
+            });
 
     }
 
@@ -54,8 +70,15 @@ export class ResultComponent implements OnInit {
     }
 
     onSaveVisit() {
-        console.log(this.result);
-        this.toasterService.showToast(TOAST_TYPE.SUCCESS, "Result Successfully Saved");
+        this.savingVisit = true;
+        this.resultService.add(this.result)
+            .then(ref => {
+                this.savingVisit = false;
+                this.toastService.showToast(TOAST_TYPE.SUCCESS, "Visit Successfully Recorded!");
+            })
+            .catch(err => {
+                this.toastService.showToast(TOAST_TYPE.ERROR, "Something went wrong");
+            })
     }
 
 

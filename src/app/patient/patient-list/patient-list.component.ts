@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Patient} from "../patient.model";
 import {PatientService} from "../patient.service";
+import {TOAST_TYPE, ToastService} from "../../shared/toast.service";
 
 @Component({
     selector: 'app-patient-list',
@@ -9,21 +10,36 @@ import {PatientService} from "../patient.service";
 })
 export class PatientListComponent implements OnInit {
 
-    displayedColumns = ['First Name', 'Last Name', 'Email', 'Phone', 'Age', 'Race', 'Gender'];
+    displayedColumns = [
+        'First Name', 'Last Name', 'Email', 'Phone', 'Age', 'Race', 'Gender', 'Actions'
+    ];
 
     patients: Patient[];
 
 
-    constructor(private patientService: PatientService) {
+    deletePatientPopoverTitle = "Are you sure to delete this patient?";
+
+    constructor(private toastService: ToastService,
+                private patientService: PatientService) {
 
     }
 
     ngOnInit() {
         this.patientService
-            .getValueChanges()
+            .getSnapshotChanges()
             .subscribe((patients) => {
                 this.patients = patients;
             });
+    }
+
+    onPatientDelete(uid) {
+        this.patientService.deletePatient(uid)
+            .then(ref => {
+                this.toastService.showToast(TOAST_TYPE.SUCCESS, "Patient Successfully Deleted!");
+            })
+            .catch(err => {
+                this.toastService.showToast(TOAST_TYPE.ERROR, "Patient Was Not Deleted. (" + err + ")");
+            })
     }
 
     getAge(dateString) {

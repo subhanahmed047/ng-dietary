@@ -9,6 +9,7 @@ import {ComponentsModule} from './components/components.module';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {OverlayModule} from "@angular/cdk/overlay";
 import {CoreModule} from "./core/core.module";
+import {MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
 
 
 @NgModule({
@@ -19,7 +20,10 @@ import {CoreModule} from "./core/core.module";
         RouterModule,
         OverlayModule,
         AppRoutingModule,
-        CoreModule
+        CoreModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule
     ],
     declarations: [
         AppComponent,

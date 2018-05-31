@@ -31,7 +31,13 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-md-4">
-                            <button mat-raised-button type="button" class="btn btn-block btn-success"
+                            <button
+                                    mat-raised-button
+                                    LoadingText
+                                    loadingTextValue="Hold on! Saving..."
+                                    [loadingTextWhen]="savingVisit"
+                                    type="button"
+                                    class="btn btn-block btn-success"
                                     (click)="onSaveVisit()">Save Visit
                             </button>
                         </div>

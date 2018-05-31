@@ -3,6 +3,8 @@ import {RiscScore} from "../risc.mode";
 import {BehaviorSubject} from "rxjs/Rx";
 import {Patient} from "../../patient/patient.model";
 import {PatientService} from "../../patient/patient.service";
+import {ResultService} from "../result/result.service";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-risc-calculator',
@@ -11,37 +13,47 @@ import {PatientService} from "../../patient/patient.service";
 })
 export class RiscCalculatorComponent implements OnInit {
 
-    @Output() scoresChange;
+    @Output() scoresChange: BehaviorSubject<RiscScore>;
+    @Output() patientChange: BehaviorSubject<Patient>;
 
     patients: Patient[];
     selectedPatient: Patient;
 
-    scores: RiscScore = {
-        gender: null,
-        age: 0,
-        bmi: 0,
-        waist: 0,
-        bp: 0,
-        glucose: 0,
-        physical: 0,
-        consumption: 0,
-        history: 0
-    };
+    scores: RiscScore;
 
-    constructor(private patientService: PatientService) {
+    isAutoloadedScores: boolean = false;
+
+    constructor(private patientService: PatientService,
+                private resultsService: ResultService) {
         this.scoresChange = new BehaviorSubject(this.scores);
+        this.patientChange = new BehaviorSubject(this.selectedPatient);
     }
 
     ngOnInit() {
-        this.patientService.getValueChanges().subscribe(patients => {
+        this.initScores();
+        this.patientService.getSnapshotChanges().subscribe(patients => {
             this.patients = patients;
         });
     }
 
     onPatientSelected() {
-        this.scores.gender = this.selectedPatient.gender;
-        //this.scores.age = this.getAge(this.selectedPatient.dob.toString());
-        //console.log(this.getAge(this.selectedPatient.dob.toString()));
+        this.patientChange.next(this.selectedPatient);
+        this.resultsService
+            .getResultsByPatientID(this.selectedPatient.id, 1)
+            .pipe(
+                map(results => results[0])
+            )
+            .subscribe(results => {
+                if (results) {
+                    this.scores = results.riscScore;
+                    this.scoresChange.next(this.scores);
+                    this.isAutoloadedScores = true;
+                } else {
+                    this.initScores();
+                    this.scores.gender = this.selectedPatient.gender;
+                    this.isAutoloadedScores = false;
+                }
+            });
     }
 
 
@@ -49,15 +61,19 @@ export class RiscCalculatorComponent implements OnInit {
         this.scoresChange.next(this.scores);
     }
 
-    private getAge(dateString) {
-        let today = new Date();
-        let birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
+    private initScores() {
+        this.scores = {
+            gender: null,
+            age: 0,
+            bmi: 0,
+            waist: 0,
+            bp: 0,
+            glucose: 0,
+            physical: 0,
+            consumption: 0,
+            history: 0
+        };
     }
+
 
 }

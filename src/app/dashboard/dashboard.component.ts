@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import * as Chartist from 'chartist';
 import {Patient} from "../patient/patient.model";
 import {PatientService} from "../patient/patient.service";
+import {ResultService} from "../risc/result/result.service";
+import {Result} from "../risc/result/result.model";
 
 @Component({
     selector: 'app-dashboard',
@@ -13,10 +15,150 @@ export class DashboardComponent implements OnInit {
     patients: Patient[];
     selectedPatient: Patient;
 
-    constructor(private patientService: PatientService) {
+    hasResults: boolean = false;
+
+    results: Result[];
+
+    constructor(private patientService: PatientService,
+                private resultService: ResultService) {
     }
 
-    startAnimationForLineChart(chart) {
+    ngOnInit() {
+        this.patientService.getSnapshotChanges().subscribe(patients => {
+            this.patients = patients;
+        });
+        this.initializeCharts();
+    }
+
+    initializeT2DMChart() {
+
+        let tdmChartLabels = [];
+        let tdmChartSeries = [];
+
+        if (this.results) {
+            for (let i = 0; i < this.results.length; i++) {
+                tdmChartLabels.push('v' + (i + 1));
+                tdmChartSeries.push(this.results[i].percentage);
+            }
+
+
+            const tdmChartData: any = {
+                labels: tdmChartLabels,
+                series: [
+                    tdmChartSeries
+                ]
+            };
+
+            const tdmChartOptions: any = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 2
+                }),
+                low: 0,
+                high: 60,
+                chartPadding: {top: 0, right: 0, bottom: 0, left: 0},
+            }
+
+            let tdmChart = new Chartist.Line('#tdmChart', tdmChartData, tdmChartOptions);
+
+            this.startAnimationForLineChart(tdmChart);
+        }
+    }
+
+    initializeBMIChart() {
+
+        let bmiChartLabels = [];
+        let bmiChartSeries = [];
+        if (this.results) {
+
+            for (let i = 0; i < this.results.length; i++) {
+                bmiChartLabels.push('v' + (i + 1));
+                bmiChartSeries.push(this.results[i].riscScore.bmi);
+            }
+
+            let bmiChartData = {
+                labels: bmiChartLabels,
+                series: [
+                    bmiChartSeries
+                ]
+            };
+            let bmiChartOptions = {
+                axisX: {
+                    showGrid: false,
+                    format: '0'
+                },
+                low: 0,
+                high: 2.5,
+                chartPadding: {top: 0, right: 0, bottom: 0, left: 0}
+            };
+            let responsiveOptions: any[] = [
+                ['screen and (max-width: 640px)', {
+                    seriesBarDistance: 5,
+                    axisX: {
+                        labelInterpolationFnc: function (value) {
+                            return value[0];
+                        }
+                    }
+                }]
+            ];
+            let bmiChart = new Chartist.Bar('#bmiChart', bmiChartData, bmiChartOptions, responsiveOptions);
+
+            this.startAnimationForChart(bmiChart);
+        }
+    }
+
+    initializeRiskChart() {
+
+        let riskChartLabels = [];
+        let riskChartSeries = [];
+
+        if (this.results) {
+            for (let i = 0; i < this.results.length; i++) {
+                riskChartLabels.push('v' + (i + 1));
+                riskChartSeries.push(this.results[i].value);
+            }
+
+
+            const riskChartData: any = {
+                labels: riskChartLabels,
+                series: [
+                    riskChartSeries
+                ]
+            };
+
+            const riskChartOptions: any = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 2
+                }),
+                low: 0,
+                high: 25,
+                chartPadding: {top: 0, right: 0, bottom: 0, left: 0}
+            }
+
+            let riskChart = new Chartist.Line('#riskChart', riskChartData, riskChartOptions);
+
+            this.startAnimationForLineChart(riskChart);
+        }
+    }
+
+    onChangePatient() {
+        console.log("Patient Selected");
+        this.resultService
+            .getResultsByPatientID(this.selectedPatient.id)
+            .subscribe(results => {
+                this.results = results;
+                (this.results.length > 0) ? this.hasResults = true : this.hasResults = false;
+                this.initializeCharts();
+            });
+    }
+
+
+    private initializeCharts() {
+        this.initializeT2DMChart();
+        this.initializeBMIChart();
+        this.initializeRiskChart();
+    }
+
+    private startAnimationForLineChart(chart) {
         let seq: any, delays: any, durations: any;
         seq = 0;
         delays = 80;
@@ -50,7 +192,7 @@ export class DashboardComponent implements OnInit {
         seq = 0;
     };
 
-    startAnimationForBarChart(chart) {
+    private startAnimationForChart(chart) {
         let seq2: any, delays2: any, durations2: any;
 
         seq2 = 0;
@@ -73,90 +215,5 @@ export class DashboardComponent implements OnInit {
 
         seq2 = 0;
     };
-
-    ngOnInit() {
-        this.patientService.getValueChanges().subscribe(patients => {
-            this.patients = patients;
-        });
-
-        /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
-        const dataDailySalesChart: any = {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-                [12, 17, 7, 17, 23, 18, 38]
-            ]
-        };
-
-        const optionsDailySalesChart: any = {
-            lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 0
-            }),
-            low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {top: 0, right: 0, bottom: 0, left: 0},
-        }
-
-        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-        this.startAnimationForLineChart(dailySalesChart);
-
-
-        /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-        const dataCompletedTasksChart: any = {
-            labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-            series: [
-                [230, 750, 450, 300, 280, 240, 200, 190]
-            ]
-        };
-
-        const optionsCompletedTasksChart: any = {
-            lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 0
-            }),
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {top: 0, right: 0, bottom: 0, left: 0}
-        }
-
-        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-        // start animation for the Completed Tasks Chart - Line Chart
-        this.startAnimationForLineChart(completedTasksChart);
-
-
-        /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-        var datawebsiteViewsChart = {
-            labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-            series: [
-                [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-            ]
-        };
-        var optionswebsiteViewsChart = {
-            axisX: {
-                showGrid: false
-            },
-            low: 0,
-            high: 1000,
-            chartPadding: {top: 0, right: 5, bottom: 0, left: 0}
-        };
-        var responsiveOptions: any[] = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
-                axisX: {
-                    labelInterpolationFnc: function (value) {
-                        return value[0];
-                    }
-                }
-            }]
-        ];
-        var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-
-        //start animation for the Emails Subscription Chart
-        this.startAnimationForBarChart(websiteViewsChart);
-    }
 
 }

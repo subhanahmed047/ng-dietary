@@ -27,6 +27,10 @@ import {RiscCalculatorComponent} from "../../risc/risc-calculator/risc-calculato
 import {PatientListComponent} from "../../patient/patient-list/patient-list.component";
 import {LoginComponent} from "../../login/login.component";
 import {SignupComponent} from "../../signup/signup.component";
+import {ConfirmationPopoverModule} from "angular-confirmation-popover";
+import {LoadingTextDirective} from "../../shared/loading-text.directive";
+import {PatientReportComponent} from "../../patient/patient-report/patient-report.component";
+import {FormattedDatePipe} from "../../shared/formatted-date.pipe";
 
 
 @NgModule({
@@ -46,6 +50,9 @@ import {SignupComponent} from "../../signup/signup.component";
         MatSortModule,
         MatTableModule,
         MatFormFieldModule,
+        ConfirmationPopoverModule.forRoot({
+            confirmButtonType: 'danger'
+        })
     ],
     declarations: [
         DashboardComponent,
@@ -53,10 +60,13 @@ import {SignupComponent} from "../../signup/signup.component";
         PatientComponent,
         PatientAddComponent,
         PatientListComponent,
+        PatientReportComponent,
         ResultComponent,
         RiscCalculatorComponent,
         LoginComponent,
-        SignupComponent
+        SignupComponent,
+        LoadingTextDirective,
+        FormattedDatePipe
     ],
     providers: []
 })

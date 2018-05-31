@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from "angularfire2/firestore";
 import {Observable} from "rxjs/Rx";
 import {Patient} from "./patient.model";
+import {map} from "rxjs/operators";
 import * as firebase from "firebase";
 import DocumentReference = firebase.firestore.DocumentReference;
 
@@ -18,14 +19,17 @@ export class PatientService {
     }
 
     getSnapshotChanges(): Observable<any> {
-        return this.afs.collection(this.patientsCollection).snapshotChanges()
-            .map((actions) => {
-                return actions.map((snapshot) => {
-                    const data = snapshot.payload.doc.data();
-                    data.id = snapshot.payload.doc.id;
-                    return data;
-                });
-            });
+        return this.afs.collection(this.patientsCollection)
+            .snapshotChanges()
+            .pipe(
+                map((actions) => {
+                    return actions.map((snapshot) => {
+                        const data = snapshot.payload.doc.data();
+                        const id = snapshot.payload.doc.id;
+                        return {id, ...data};
+                    });
+                })
+            )
     }
 
     getValueChanges(): Observable<any> {
@@ -40,7 +44,7 @@ export class PatientService {
         return this.afs.collection(this.patientsCollection).doc(id).update(patient);
     }
 
-    delete(id: string): Promise<void> {
+    deletePatient(id: string): Promise<void> {
         return this.afs.collection(this.patientsCollection).doc(id).delete();
     }
 }
