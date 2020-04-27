@@ -4,7 +4,7 @@ Angular6 and Google Cloud Firestore based application for dietitions to manage a
 
 ## DEMO
 Have a look at the quick demo here: https://stackblitz.com/github/gqairagjo
-temp email: subhanahmed04@gmail.com
+temp email: subhanahmed047@gmail.com
 temp pass: demo123
 
 ## Getting Started
