@@ -3,7 +3,7 @@
 Angular6 and Google Cloud Firestore based application for dietitions to manage and analyze Type-2 Diabetese Patients in Real-Time.
 
 ## DEMO
-Have a look at the quick demo here: https://gqairagjo.github.stackblitz.io
+Have a look at the quick demo here: https://stackblitz.com/github/subhanahmed047/ng-dietary
 - temp email: subhanahmed047@gmail.com
 - temp pass: demo123
 
