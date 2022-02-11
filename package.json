@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "6.0.1",
     "@angular/platform-server": "6.0.1",
     "@angular/router": "6.0.1",
-    "ajv": "6.4.0",
+    "ajv": "6.12.3",
     "angular-confirmation-popover": "4.1.0",
     "angularfire2": "5.0.0-rc.9",
     "arrive": "2.4.1",
